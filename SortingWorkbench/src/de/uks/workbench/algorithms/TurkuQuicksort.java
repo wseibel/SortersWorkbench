@@ -20,13 +20,13 @@ public class TurkuQuicksort {
 			rt = r;
 			H = a[r].getKey();
 
-			while (lt <= rt) {
-				while (lt<r && a[lt].getKey() < H) {
+			while (lt < rt) {
+				do {
 					lt++;
-				}
-				while (rt >l && a[rt].getKey() > H) {
+				} while (lt < r && a[lt].getKey() < H);
+				do {
 					rt--;
-				}
+				} while (rt > l && a[rt].getKey() > H);
 				Util.switchValues(a, lt, rt);
 			}
 			Util.switchValues(a, lt, rt);
