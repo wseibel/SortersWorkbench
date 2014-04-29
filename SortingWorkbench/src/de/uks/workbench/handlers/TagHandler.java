@@ -1,6 +1,8 @@
 package de.uks.workbench.handlers;
 
 import java.lang.reflect.Array;
+import java.util.Arrays;
+import java.util.Comparator;
 
 import de.uks.workbench.interfaces.ISortValue;
 import de.uks.workbench.util.Util;
@@ -22,8 +24,6 @@ public abstract class TagHandler<T extends ISortValue> {
 				array.length - 1);
 		T[] sample = (T[]) Array.newInstance(array.getClass().getComponentType(),
 				sampleSize);
-//		T[] shuffledArray = new T[array.length - 1];
-//		T[] sample = new T[sampleSize];
 		for (int i = 0; i < array.length - 1; i++) {
 			shuffledArray[i] = array[i + 1];
 		}
@@ -34,10 +34,27 @@ public abstract class TagHandler<T extends ISortValue> {
 		return sample;
 	}
 
-	protected void shuffleValues(T[] array) {
+	private void shuffleValues(T[] array) {
 		// Shuffle array
 		for (int i = array.length; i > 1; i--) {
 			Util.switchValues(array, i - 1, Util.randomGen().nextInt(i));
 		}
+	}
+
+	protected void sortArrayDescending(T[] array, int fromIndex, int toIndex) {
+		Arrays.sort(array, fromIndex, toIndex, new Comparator<T>(){
+
+			@Override
+			public int compare(T arg0, T arg1) {
+				if(arg1.getKey() < arg0.getKey()){
+					return -1;
+				} 
+				if(arg1.getKey() > arg0.getKey()){
+					return 1;
+				}
+				return 0;
+			}
+			
+		});
 	}
 }

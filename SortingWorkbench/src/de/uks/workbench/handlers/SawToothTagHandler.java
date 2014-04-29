@@ -1,13 +1,11 @@
 package de.uks.workbench.handlers;
 
 import java.lang.reflect.Array;
-import java.util.Arrays;
-import java.util.Comparator;
 
 import de.uks.workbench.interfaces.ISortValue;
 
-public class RoofTagHandler<T extends ISortValue> extends TagHandler<T> {
-
+public class SawToothTagHandler<T extends ISortValue> extends TagHandler<T> {
+	
 	@SuppressWarnings("unchecked")
 	public T[] permData(T A[], int V) {
 		int N = A.length - 1;
@@ -16,6 +14,7 @@ public class RoofTagHandler<T extends ISortValue> extends TagHandler<T> {
 		T[] firstPart = (T[]) Array.newInstance(A.getClass().getComponentType(), half + remainder);
 		T[] secondPart = (T[]) Array.newInstance(A.getClass().getComponentType(), half);
 
+		//  Divide the array in two parts with similar distribution of keys 
 		for (int i = 0, j = 0, k = 0; i < N; i++) {
 			if (i % 2 == 0) {
 				firstPart[j++] = A[i + 1];
@@ -24,8 +23,6 @@ public class RoofTagHandler<T extends ISortValue> extends TagHandler<T> {
 			}
 		}
 
-		// Sort half of the array by descending order
-		sortArrayDescending(secondPart, 0, secondPart.length);
 		// Put the two parts back together and adjust the position info
 		for (int i = 1; i < N + 1; i++) {
 			if (i <= half) {
@@ -38,5 +35,4 @@ public class RoofTagHandler<T extends ISortValue> extends TagHandler<T> {
 
 		return A;
 	}
-
 }

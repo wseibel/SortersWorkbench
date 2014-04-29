@@ -1,14 +1,15 @@
 package de.uks.workbench;
 
 import de.uks.workbench.algorithms.TurkuQuicksort;
+import de.uks.workbench.interfaces.PermutationType;
 import de.uks.workbench.values.DefaultValue;
 
 public class WorkbenchStart {
-	private static final int N = 100000;
+	private static final int N = 20;
 	private static final int M = N / 5;
 	private static final int V = 75;
 	
-	private static final String TAG = "default";
+	private static final String TAG = PermutationType.NINETY_TEN_SEQUENCE.toString();
 
 	public static void main(String[] args) {
 		// Generate Data

@@ -4,8 +4,11 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 import de.uks.workbench.handlers.DefaultTagHandler;
+import de.uks.workbench.handlers.NinetyTenTagHandler;
 import de.uks.workbench.handlers.RoofTagHandler;
+import de.uks.workbench.handlers.SawToothTagHandler;
 import de.uks.workbench.handlers.TagHandler;
+import de.uks.workbench.interfaces.PermutationType;
 import de.uks.workbench.util.Util;
 import de.uks.workbench.values.DefaultValue;
 
@@ -17,8 +20,10 @@ public class Workbench {
 
 	public Workbench(){
 		
-		tagHandlers.put("default", new DefaultTagHandler<DefaultValue>());
-		tagHandlers.put("roof", new RoofTagHandler<DefaultValue>());
+		tagHandlers.put(PermutationType.DEFAULT.toString(), new DefaultTagHandler<DefaultValue>());
+		tagHandlers.put(PermutationType.ROOF.toString(), new RoofTagHandler<DefaultValue>());
+		tagHandlers.put(PermutationType.SAWTOOTH.toString(), new SawToothTagHandler<DefaultValue>());
+		tagHandlers.put(PermutationType.NINETY_TEN_SEQUENCE.toString(), new NinetyTenTagHandler<DefaultValue>());
 	}
 
 	public DefaultValue[] DataGen(int N, int M) {
