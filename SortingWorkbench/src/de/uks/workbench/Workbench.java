@@ -8,6 +8,7 @@ import de.uks.workbench.handlers.NinetyTenTagHandler;
 import de.uks.workbench.handlers.RoofTagHandler;
 import de.uks.workbench.handlers.SawToothTagHandler;
 import de.uks.workbench.handlers.TagHandler;
+import de.uks.workbench.interfaces.Result;
 import de.uks.workbench.interfaces.PermutationType;
 import de.uks.workbench.util.Util;
 import de.uks.workbench.values.DefaultValue;
@@ -48,12 +49,18 @@ public class Workbench {
 		return tagHandlers.get(Tag).permData(A, V);
 	}
 
-	public boolean checkSort(DefaultValue[] a) {
+	public Result checkSort(DefaultValue[] a, boolean checkStable) {
+		if(checkStable){
+			
+		}
 		for (int i = 1; i < a.length - 1; i++) {
 			if (a[i].getKey() > a[i + 1].getKey()) {
-				return false;
+				return Result.WRONG_ORDER;
+			}
+			if(checkStable && a[i].getInfo() >= a[i+1].getInfo()){
+				return Result.NOT_STABLE;
 			}
 		}
-		return true;
+		return Result.OK;
 	}
 }

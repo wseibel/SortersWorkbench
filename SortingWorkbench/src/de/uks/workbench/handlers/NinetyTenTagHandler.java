@@ -31,7 +31,7 @@ public class NinetyTenTagHandler<T extends ISortValue> extends TagHandler<T> {
 		}
 		// Put the values of the 10% array behind the 90% array back in the original array
 		for (int i = 1, j = 0, k = 0; i < N + 1; i++) {
-			if (i < firstPart.length) {
+			if ((i - 1) < firstPart.length) {
 				A[i] = firstPart[j++];
 			} else {
 				A[i] = secondPart[k++];
