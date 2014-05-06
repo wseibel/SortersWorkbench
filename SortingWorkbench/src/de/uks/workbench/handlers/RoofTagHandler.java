@@ -1,9 +1,6 @@
 package de.uks.workbench.handlers;
 
 import java.lang.reflect.Array;
-import java.util.Arrays;
-import java.util.Comparator;
-
 import de.uks.workbench.interfaces.ISortValue;
 
 public class RoofTagHandler<T extends ISortValue> extends TagHandler<T> {
@@ -28,10 +25,10 @@ public class RoofTagHandler<T extends ISortValue> extends TagHandler<T> {
 		sortArrayDescending(secondPart, 0, secondPart.length);
 		// Put the two parts back together and adjust the position info
 		for (int i = 1; i < N + 1; i++) {
-			if (i <= half) {
+			if (i <= half + remainder) {
 				A[i] = firstPart[i - 1];
 			} else {
-				A[i] = secondPart[(i - 1) - half];
+				A[i] = secondPart[(i - 1) - (half + remainder)];
 			}
 			A[i].setInfo(i);
 		}

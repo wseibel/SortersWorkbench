@@ -25,10 +25,10 @@ public class SawToothTagHandler<T extends ISortValue> extends TagHandler<T> {
 
 		// Put the two parts back together and adjust the position info
 		for (int i = 1; i < N + 1; i++) {
-			if (i <= half) {
+			if (i <= half + remainder) {
 				A[i] = firstPart[i - 1];
 			} else {
-				A[i] = secondPart[(i - 1) - half];
+				A[i] = secondPart[(i - 1) - (half + remainder)];
 			}
 			A[i].setInfo(i);
 		}

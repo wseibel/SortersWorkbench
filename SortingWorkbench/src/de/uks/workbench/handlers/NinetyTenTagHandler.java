@@ -10,12 +10,10 @@ public class NinetyTenTagHandler<T extends ISortValue> extends TagHandler<T> {
 	public T[] permData(T A[], int V) {
 		int N = A.length - 1;
 		double ninetyPercent = ((double) N / 100) * 90;
-		double tenPercent = ((double) N / 100) * 10;
-		int remainder = 1;
-		T[] firstPart = (T[]) Array.newInstance(A.getClass().getComponentType(), (int) ninetyPercent + remainder);
-		T[] secondPart = (T[]) Array.newInstance(A.getClass().getComponentType(), (int) tenPercent);
+		T[] firstPart = (T[]) Array.newInstance(A.getClass().getComponentType(), (int) ninetyPercent);
+		T[] secondPart; //= (T[]) Array.newInstance(A.getClass().getComponentType(), (int) tenPercent);
 		// Put 10% randomly picked values in a new array
-		secondPart = getRandomSample(A, secondPart.length);
+		secondPart = getRandomSample(A, N-(int)ninetyPercent);
 		permuteSample(secondPart);
 		boolean exists = false;
 		// Put every other value in another array
