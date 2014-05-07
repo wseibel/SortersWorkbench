@@ -1,11 +1,17 @@
 package de.uks.workbench;
 
 import de.uks.workbench.algorithms.TurkuQuicksort;
+import de.uks.workbench.elements.DefaultElement;
 import de.uks.workbench.interfaces.PermutationType;
 import de.uks.workbench.interfaces.Result;
-import de.uks.workbench.values.DefaultValue;
+
+/**
+ * This class includes the starting point for the benchmark suite for sort algorithms and provides all settings
+ * 
+ */
 
 public class WorkbenchStart {
+	// Settings
 	private static final int N = 111;
 	private static final int M = N / 7;
 	private static final int V = 75;
@@ -14,23 +20,27 @@ public class WorkbenchStart {
 
 	private static final String TAG = PermutationType.NINETY_TEN_SEQUENCE.toString();
 
+	/**
+	 * The starting point for the workbench
+	 * 
+	 * @param <args>
+	 *                Program arguments
+	 */
 	public static void main(String[] args) {
 		// Generate Data
 		Workbench wb = new Workbench();
-		for (int i = 1; i < N; i++) {
-			DefaultValue[] A = wb.DataGen(i, M);
-			System.out.println("Data generation: " + (A != null ? "done." : "failed"));
-			A = wb.DataPerm(A, V, TAG);
-			System.out.println("Data permutation (" + TAG +"): " + (A != null ? "done" : "failed"));
-			// Sort Data
-			int left = 1, right = i;
-			TurkuQuicksort.quicksort(A, left, right);
-			// Show sort result
-			Result result = wb.checkSort(A, CHECK_STABLE);
-			System.out.println("\nSort result: " + result.toString() + "\n");
-			if(SHOW_VALUES){
-				wb.showValues(A);
-			}
+		DefaultElement[] A = wb.DataGen(N, M);
+		System.out.println("Data generation: " + (A != null ? "done" : "failed"));
+		A = wb.DataPerm(A, V, TAG);
+		System.out.println("Data permutation (" + TAG + "): " + (A != null ? "done" : "failed"));
+		// Sort Data
+		int left = 1, right = N;
+		TurkuQuicksort.quicksort(A, left, right);
+		// Show sort result
+		Result result = wb.checkSort(A, CHECK_STABLE);
+		System.out.println("\nSort result: " + result.toString() + "\n");
+		if (SHOW_VALUES) {
+			wb.showValues(A);
 		}
 	}
 

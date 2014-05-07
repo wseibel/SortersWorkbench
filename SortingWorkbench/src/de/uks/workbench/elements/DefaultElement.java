@@ -1,18 +1,23 @@
-package de.uks.workbench.values;
+package de.uks.workbench.elements;
 
-import de.uks.workbench.interfaces.ISortValue;
+import de.uks.workbench.interfaces.ISortElement;
 
-public class DefaultValue implements ISortValue, Comparable<DefaultValue> {
+/**
+ * The default element type
+ *
+ */
+
+public class DefaultElement implements ISortElement, Comparable<DefaultElement> {
 	
 	private int key;
 	private int info;
 	
-	public DefaultValue(int key, int info){
+	public DefaultElement(int key, int info){
 		this.key = key;
 		this.info = info;
 	}
 	
-	public DefaultValue(int key){
+	public DefaultElement(int key){
 		this(key, 0);
 	}
 
@@ -37,7 +42,7 @@ public class DefaultValue implements ISortValue, Comparable<DefaultValue> {
 	}
 
 	@Override
-	public int compareTo(DefaultValue o) {
+	public int compareTo(DefaultElement o) {
 		if(this.key < o.getKey()){
 			return -1;
 		} 

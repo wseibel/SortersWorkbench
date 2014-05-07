@@ -1,8 +1,8 @@
 package de.uks.workbench.handlers;
 
-import de.uks.workbench.interfaces.ISortValue;
+import de.uks.workbench.interfaces.ISortElement;
 
-public class DefaultTagHandler<T extends ISortValue> extends TagHandler<T> {
+public class DefaultTagHandler<T extends ISortElement> extends TagHandler<T> {
 	
 	public T[] permData(T A[], int V) {
 		int N = A.length - 1;

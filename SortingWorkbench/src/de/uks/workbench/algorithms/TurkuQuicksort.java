@@ -1,6 +1,6 @@
 package de.uks.workbench.algorithms;
 
-import de.uks.workbench.interfaces.ISortValue;
+import de.uks.workbench.interfaces.ISortElement;
 import de.uks.workbench.util.Util;
 
 /**
@@ -11,7 +11,7 @@ import de.uks.workbench.util.Util;
  */
 public class TurkuQuicksort {
 
-	public static <T extends ISortValue> void quicksort(T[] a, int l, int r) {
+	public static <T extends ISortElement> void quicksort(T[] a, int l, int r) {
 		int H;
 		int rt, lt;
 
@@ -20,13 +20,13 @@ public class TurkuQuicksort {
 			rt = r;
 			H = a[r].getKey();
 
-			while (lt < rt) {
+			while (lt <= rt) {
 				do {
 					lt++;
-				} while (lt < r && a[lt].getKey() < H);
+				} while (a[lt].getKey() < H);
 				do {
 					rt--;
-				} while (rt > l && a[rt].getKey() > H);
+				} while (a[rt].getKey() > H);
 				Util.switchValues(a, lt, rt);
 			}
 			Util.switchValues(a, lt, rt);

@@ -1,9 +1,16 @@
 package de.uks.workbench.handlers;
 
 import java.lang.reflect.Array;
-import de.uks.workbench.interfaces.ISortValue;
+import de.uks.workbench.interfaces.ISortElement;
 
-public class RoofTagHandler<T extends ISortValue> extends TagHandler<T> {
+/**
+ * The handler class for the permutation option "Roof". Divides the array in two halves and orders the first half ascending and the second
+ * descending
+ * 
+ * @param <T>
+ *                The type of elements which supposed to be permuted
+ */
+public class RoofTagHandler<T extends ISortElement> extends TagHandler<T> {
 
 	@SuppressWarnings("unchecked")
 	public T[] permData(T A[], int V) {
