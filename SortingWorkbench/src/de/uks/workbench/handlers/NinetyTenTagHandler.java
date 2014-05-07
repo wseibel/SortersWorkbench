@@ -10,6 +10,8 @@ import de.uks.workbench.interfaces.ISortElement;
  * 
  * @param <T>
  *                The type of elements which supposed to be permuted
+ * 
+ * @see de.uks.workbench.interfaces.PermutationType PermutationTypes
  */
 public class NinetyTenTagHandler<T extends ISortElement> extends TagHandler<T> {
 
