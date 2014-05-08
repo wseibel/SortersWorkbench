@@ -1,4 +1,4 @@
 SortersWorkbench
 ================
 
-A workbench for sorting algorithm.
+A benchmark suite for sort algorithms.
