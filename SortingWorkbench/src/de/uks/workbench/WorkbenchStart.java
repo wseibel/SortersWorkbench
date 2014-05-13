@@ -27,11 +27,17 @@ public class WorkbenchStart {
 	 *                Program arguments
 	 */
 	public static void main(String[] args) {
-		// Generate Data
-		Workbench wb = new Workbench();
-		DefaultElement[] A = wb.DataGen(N, M);
+		// Create the inital array
+		DefaultElement[] A = new DefaultElement[N + 1];
+		for(int i = 0; i<N+1; i++){
+			A[i] = new DefaultElement(-1, -1);
+		}
+		// Generate keys and info
+		Workbench<DefaultElement> wb = new Workbench<DefaultElement>();
+		wb.DataGen(A, N, M);
 		System.out.println("Data generation: " + (A != null ? "done" : "failed"));
-		A = wb.DataPerm(A, V, TAG);
+		// Permute the keys
+		wb.DataPerm(A, V, TAG);
 		System.out.println("Data permutation (" + TAG + "): " + (A != null ? "done" : "failed"));
 		// Sort Data
 		int left = 1, right = N;

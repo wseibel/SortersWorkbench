@@ -3,12 +3,12 @@ package de.uks.workbench;
 import java.util.Arrays;
 import java.util.HashMap;
 
-import de.uks.workbench.elements.DefaultElement;
 import de.uks.workbench.handlers.DefaultTagHandler;
 import de.uks.workbench.handlers.NinetyTenTagHandler;
 import de.uks.workbench.handlers.RoofTagHandler;
 import de.uks.workbench.handlers.SawtoothTagHandler;
 import de.uks.workbench.handlers.TagHandler;
+import de.uks.workbench.interfaces.ISortElement;
 import de.uks.workbench.interfaces.Result;
 import de.uks.workbench.interfaces.PermutationType;
 
@@ -17,17 +17,17 @@ import de.uks.workbench.interfaces.PermutationType;
  * This class is supposed to prepare an array for benchmarking different sort algorithms. It also checks the result after the sort
  * 
  */
-public class Workbench {
+public class Workbench <T extends ISortElement> {
 
 	// HashMap for different handlers which handle the different permutation options
-	HashMap<String, TagHandler<DefaultElement>> tagHandlers = new HashMap<String, TagHandler<DefaultElement>>();
+	HashMap<String, TagHandler<T>> tagHandlers = new HashMap<String, TagHandler<T>>();
 
 	public Workbench() {
 		// Initialize the handler HashMap
-		tagHandlers.put(PermutationType.DEFAULT.toString(), new DefaultTagHandler<DefaultElement>());
-		tagHandlers.put(PermutationType.ROOF.toString(), new RoofTagHandler<DefaultElement>());
-		tagHandlers.put(PermutationType.SAWTOOTH.toString(), new SawtoothTagHandler<DefaultElement>());
-		tagHandlers.put(PermutationType.NINETY_TEN_SEQUENCE.toString(), new NinetyTenTagHandler<DefaultElement>());
+		tagHandlers.put(PermutationType.DEFAULT.toString(), new DefaultTagHandler<T>());
+		tagHandlers.put(PermutationType.ROOF.toString(), new RoofTagHandler<T>());
+		tagHandlers.put(PermutationType.SAWTOOTH.toString(), new SawtoothTagHandler<T>());
+		tagHandlers.put(PermutationType.NINETY_TEN_SEQUENCE.toString(), new NinetyTenTagHandler<T>());
 	}
 
 	/**
@@ -40,27 +40,24 @@ public class Workbench {
 	 *                Determines the repetitions of a certain key
 	 * @return The accordingly to N and M parameters generated Array
 	 */
-	public DefaultElement[] DataGen(int N, int M) {
-		DefaultElement[] a = new DefaultElement[N + 1];
+	public T[] DataGen(T[] A, int N, int M) {
 		int n = 0;
 		if (M <= N) {
 			n = N / M;
 		} else {
 			n = N;
 		}
-		// Create a stopper at index 0
-		a[0] = new DefaultElement(-1, 0);
 		// Create an array with n different numbers
 		for (int i = 1; i < N + 1; i++) {
 			int key = ((i - 1) % n) + 1;
-			a[i] = new DefaultElement(key);
+			A[i].setKey(key);
 		}
-		Arrays.sort(a);
+		Arrays.sort(A);
 		// Set the position in the info variable
 		for (int i = 1; i < N + 1; i++) {
-			a[i].setInfo(i);
+			A[i].setInfo(i);
 		}
-		return a;
+		return A;
 	}
 
 	/**
@@ -74,7 +71,7 @@ public class Workbench {
 	 *                Describes the pattern of permutation
 	 * @return The accordingly to the tag parameter permuted array
 	 */
-	public DefaultElement[] DataPerm(DefaultElement A[], int V, String Tag) {
+	public T[] DataPerm(T A[], int V, String Tag) {
 		return tagHandlers.get(Tag).permData(A, V);
 	}
 
@@ -89,7 +86,7 @@ public class Workbench {
 	 * @return A result which shows if the order is correct. If the checkStable parameter is true, the array is in the right order, and
 	 *         the array is not stable, the result shows that
 	 */
-	public Result checkSort(DefaultElement[] a, boolean checkStable) {
+	public Result checkSort(T[] a, boolean checkStable) {
 		for (int i = 1; i < a.length - 1; i++) {
 			if (a[i].getKey() > a[i + 1].getKey()) {
 				return Result.WRONG_ORDER;
@@ -109,9 +106,9 @@ public class Workbench {
 	 * @param <A>
 	 *                The array to show
 	 */
-	public void showValues(DefaultElement[] A) {
+	public void showValues(T[] A) {
 		System.out.println("\nValues after sort: ");
-		for (DefaultElement value : A) {
+		for (T value : A) {
 			System.out.println("key: " + value.getKey() + ", info: " + value.getInfo());
 		}
 	}
