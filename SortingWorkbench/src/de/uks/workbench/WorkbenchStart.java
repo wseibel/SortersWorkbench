@@ -29,8 +29,8 @@ public class WorkbenchStart {
 	public static void main(String[] args) {
 		// Create the inital array
 		DefaultElement[] A = new DefaultElement[N + 1];
-		for(int i = 0; i<N+1; i++){
-			A[i] = new DefaultElement(-1, -1);
+		for (int i = 0; i < N + 1; i++) {
+			A[i] = new DefaultElement();
 		}
 		// Generate keys and info
 		Workbench<DefaultElement> wb = new Workbench<DefaultElement>();

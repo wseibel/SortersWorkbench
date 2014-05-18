@@ -6,8 +6,10 @@ import de.uks.workbench.interfaces.ISortElement;
  * The default element type
  *
  */
-
 public class DefaultElement implements ISortElement, Comparable<DefaultElement> {
+
+private static final int DEFAULT_KEY = -1;
+private static final int DEFAULT_INFO = -1;
 	
 	private int key;
 	private int info;
@@ -18,7 +20,11 @@ public class DefaultElement implements ISortElement, Comparable<DefaultElement> 
 	}
 	
 	public DefaultElement(int key){
-		this(key, 0);
+		this(key, DEFAULT_INFO);
+	}
+	
+	public DefaultElement(){
+		this(DEFAULT_KEY, DEFAULT_INFO);
 	}
 
 	@Override
