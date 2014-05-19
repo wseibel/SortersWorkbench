@@ -1,26 +1,21 @@
 package de.uks.workbench.handlers;
 
-import java.lang.reflect.Array;
-
-import de.uks.workbench.interfaces.ISortElement;
+import de.uks.workbench.elements.DefaultElement;
 
 /**
+ * 
  * The handler class for the permutation option "SAWTOOTH". Divides the array in two halves and orders them separately
- * 
- * @param <T>
- *                The type of elements which supposed to be permuted
- * 
+ *  
  * @see de.uks.workbench.interfaces.PermutationType PermutationTypes
  */
-public class SawtoothTagHandler<T extends ISortElement> extends TagHandler<T> {
+public class SawtoothTagHandler extends TagHandler {
 
-	@SuppressWarnings("unchecked")
-	public T[] permData(T A[], int V) {
+	public DefaultElement[] permData(DefaultElement A[], int V) {
 		int N = A.length - 1;
 		int half = N / 2;
 		int remainder = N % 2;
-		T[] firstPart = (T[]) Array.newInstance(A.getClass().getComponentType(), half + remainder);
-		T[] secondPart = (T[]) Array.newInstance(A.getClass().getComponentType(), half);
+		DefaultElement[] firstPart = new DefaultElement[half + remainder];
+		DefaultElement[] secondPart =new DefaultElement[half];
 
 		// Divide the array in two parts with similar distribution of keys
 		for (int i = 0, j = 0, k = 0; i < N; i++) {

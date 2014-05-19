@@ -5,23 +5,24 @@ import java.util.Random;
 import de.uks.workbench.interfaces.ISortElement;
 
 /**
+ * 
  * This class provides some often used utilities
  * 
  */
 public class Util {
 
-	public static final int DEFAULT_SEED = 17;
+	private static final int DEFAULT_SEED = 17;
 
 	private static Random randomGen = new Random(DEFAULT_SEED);
 
 	/**
 	 * Swaps two elements in the given array
 	 * 
-	 * @param <array>
+	 * @param array
 	 *                The array in which the elements supposed to be swapped
-	 * @param <x>
+	 * @param x
 	 *                The position of the first element to swap
-	 * @param <y>
+	 * @param y
 	 *                The position of the second element to swap
 	 */
 	public static <T extends ISortElement> void switchValues(T[] array, int x, int y) {
@@ -33,8 +34,9 @@ public class Util {
 	/**
 	 * Swaps the keys of two elements in the given array without changing the info value of the element
 	 * 
-	 * @param <x>The position of the first element to swap the keys
-	 * @param <y>
+	 * @param x
+	 *                The position of the first element to swap the keys
+	 * @param y
 	 *                The position of the first element to swap the keys
 	 */
 	public static <T extends ISortElement> void switchValueKeys(T x, T y) {
@@ -53,11 +55,18 @@ public class Util {
 	/**
 	 * Re-initializes the random number generator with the given seed parameter value
 	 * 
-	 * @param <seed>
+	 * @param seed
 	 *                The seed value for the random number generator
 	 */
 	public static void resetRandomGen(int seed) {
 		randomGen = new Random(seed);
+	}
+
+	/**
+	 * Re-initializes the random number generator with the default seed value
+	 */
+	public static void resetRandomGen() {
+		resetRandomGen(DEFAULT_SEED);
 	}
 
 }

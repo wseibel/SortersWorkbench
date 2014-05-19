@@ -1,33 +1,28 @@
 package de.uks.workbench.handlers;
 
-import java.lang.reflect.Array;
-
-import de.uks.workbench.interfaces.ISortElement;
+import de.uks.workbench.elements.DefaultElement;
 
 /**
+ * 
  * The handler class for the permutation option "NINETY_TEN_SEQUENCE". Divides the array in two parts. The first half has a size of 90% and
  * is ordered ascending. The other part has a size of 10% and is ordered randomly
- * 
- * @param <T>
- *                The type of elements which supposed to be permuted
- * 
+ *  
  * @see de.uks.workbench.interfaces.PermutationType PermutationTypes
  */
-public class NinetyTenTagHandler<T extends ISortElement> extends TagHandler<T> {
+public class NinetyTenTagHandler extends TagHandler {
 
-	@SuppressWarnings("unchecked")
-	public T[] permData(T A[], int V) {
+	public DefaultElement[] permData(DefaultElement A[], int V) {
 		int N = A.length - 1;
 		double ninetyPercent = ((double) N / 100) * 90;
-		T[] firstPart = (T[]) Array.newInstance(A.getClass().getComponentType(), (int) ninetyPercent);
-		T[] secondPart; // = (T[]) Array.newInstance(A.getClass().getComponentType(), (int) tenPercent);
+		DefaultElement[] firstPart = new DefaultElement[(int) ninetyPercent];
+		DefaultElement[] secondPart; 
 		// Put 10% randomly picked values in a new array
 		secondPart = getRandomSample(A, N - (int) ninetyPercent);
 		permuteSample(secondPart);
 		boolean exists = false;
 		// Put every other value in another array
 		for (int i = 1, j = 0; i < A.length; i++, exists = false) {
-			for (T value : secondPart) {
+			for (DefaultElement value : secondPart) {
 				if (value.getInfo() == A[i].getInfo()) {
 					exists = true;
 				}

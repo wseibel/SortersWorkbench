@@ -1,7 +1,8 @@
 package de.uks.workbench.interfaces;
 
 /**
- * The different types of permutation
+ * 
+ * The different types of permutation 
  * 
  */
 public enum PermutationType {

@@ -1,6 +1,7 @@
 package de.uks.workbench.interfaces;
 
 /**
+ * 
  * This interface has to be implemented for every kind of elements
  * 
  * @see de.uks.workbench.elements ElementTypes

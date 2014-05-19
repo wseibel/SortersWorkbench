@@ -3,6 +3,7 @@ package de.uks.workbench.elements;
 import de.uks.workbench.interfaces.ISortElement;
 
 /**
+ * 
  * The default element type
  *
  */

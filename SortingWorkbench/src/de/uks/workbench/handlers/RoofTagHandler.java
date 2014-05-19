@@ -1,26 +1,22 @@
 package de.uks.workbench.handlers;
 
-import java.lang.reflect.Array;
-import de.uks.workbench.interfaces.ISortElement;
+import de.uks.workbench.elements.DefaultElement;
 
 /**
+ * 
  * The handler class for the permutation option "Roof". Divides the array in two halves and orders the first half ascending and the second
  * descending
- * 
- * @param <T>
- *                The type of elements which supposed to be permuted
- * 
+ *  
  * @see de.uks.workbench.interfaces.PermutationType PermutationTypes
  */
-public class RoofTagHandler<T extends ISortElement> extends TagHandler<T> {
+public class RoofTagHandler extends TagHandler {
 
-	@SuppressWarnings("unchecked")
-	public T[] permData(T A[], int V) {
+	public DefaultElement[] permData(DefaultElement A[], int V) {
 		int N = A.length - 1;
 		int half = N / 2;
 		int remainder = N % 2;
-		T[] firstPart = (T[]) Array.newInstance(A.getClass().getComponentType(), half + remainder);
-		T[] secondPart = (T[]) Array.newInstance(A.getClass().getComponentType(), half);
+		DefaultElement[] firstPart = new DefaultElement[half + remainder];
+		DefaultElement[] secondPart = new DefaultElement[half];
 
 		for (int i = 0, j = 0, k = 0; i < N; i++) {
 			if (i % 2 == 0) {
