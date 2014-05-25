@@ -77,8 +77,8 @@ public class LomutoQuicksort implements IAlgorithm {
 				keycount++;
 			}
 			Util.switchValues(X, L, LastLow);
-			runSortWithCounter(X, L, LastLow - 1, keycount);
-			runSortWithCounter(X, LastLow + 1, U, keycount);
+			keycount = runSortWithCounter(X, L, LastLow - 1, keycount);
+			keycount = runSortWithCounter(X, LastLow + 1, U, keycount);
 		}
 		return keycount;
 	}
