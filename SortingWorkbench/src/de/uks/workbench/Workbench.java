@@ -1,9 +1,5 @@
 package de.uks.workbench;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.HashMap;
 
@@ -20,6 +16,7 @@ import de.uks.workbench.interfaces.IAlgorithm;
 import de.uks.workbench.interfaces.MeasurementMethod;
 import de.uks.workbench.interfaces.Result;
 import de.uks.workbench.interfaces.PermutationType;
+import de.uks.workbench.util.FileTextCreator;
 import de.uks.workbench.util.Util;
 
 /**
@@ -28,7 +25,6 @@ import de.uks.workbench.util.Util;
  * 
  */
 public class Workbench {
-
 	// HashMap for different handlers which handle the different permutation options
 	HashMap<String, TagHandler> tagHandlers = new HashMap<String, TagHandler>();
 	// HashMap for the different algorithms
@@ -123,6 +119,7 @@ public class Workbench {
 		long[] results = new long[W];
 		// Repeat the benchmark W times with different values (since seed is not reseted)
 		for (int i = 0; i < W; i++) {
+			System.out.println("Iteration: " + (i + 1));
 			// Generate keys and info
 			DefaultElement[] array = DataGen(N, M);
 			System.out.println("Data generation: " + (array != null ? "done" : "failed"));
@@ -132,8 +129,9 @@ public class Workbench {
 			// Sort Data
 			int left = 1, right = N;
 			if (measurement == MeasurementMethod.TIME) {
+				IAlgorithm algorithm = algorithms.get(type);
 				long startTime = System.currentTimeMillis();
-				algorithms.get(type).runSort(array, left, right);
+				algorithm.runSort(array, left, right);
 				results[i] = System.currentTimeMillis() - startTime;
 			}
 			if (measurement == MeasurementMethod.KEY_COMPARISONS) {
@@ -141,84 +139,12 @@ public class Workbench {
 			}
 			// Check if the elements are in the correct order
 			Result checkResult = checkSort(array, algorithms.get(type).getIsStable());
-			System.out.println("\nSort result: " + checkResult.toString() + "\n");
+			System.out.println("Sort result: " + checkResult.toString() + "\n");
 		}
+		// Write the results to file
 		System.out.print("Writing result to file: ");
-		System.out.println(saveToFile(results, type, measurement, N, M, V, tag, W, comment, fileName) ? "done" : "failed");
-	}
-
-	/**
-	 * Writes the results into a file
-	 * 
-	 * @param type
-	 *                Determines the algorithm which is used for sorting
-	 * @param measurement
-	 *                Determines the measurement method (time or key comparisons)
-	 * @param N
-	 *                Number of key values
-	 * @param M
-	 *                A factor for the number of repetitions for each key (n=N/M: n determines how many different keys will be created)
-	 * @param V
-	 *                Degree of pre-sorting (0 <= V <= 100). A sample of (100 - V)/100 * N keys will be permuted (is only used with
-	 *                DEFAULT tag)
-	 * @param tag
-	 *                Describes the permutation pattern
-	 * @param W
-	 *                Number iterations the benchmark is executed
-	 * @param comment
-	 *                A freely usable text which can be used for benchmark identifying
-	 * @param fileName
-	 *                The name for the file in which the result will be written
-	 * @return A boolean which shows whether the write operation was successfully (true = success)
-	 */
-	private boolean saveToFile(long[] results, AlgoType type, MeasurementMethod measurement, int N, int M, int V, String tag, int W,
-			String comment, String fileName) {
-		try {
-			PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(fileName, true)));
-			// Write the header
-			writer.println("AlgoType;N;M;V;PermutationType;W;Comment;ED;Time;KeyComparisons");
-			String ED = ";E";
-			String values = type.toString() + ";" + N + ";" + M + ";" + V + ";" + tag + ";" + W + ";" + comment;
-			long sumResult = 0;
-			// Write a new line for every result
-			for (int i = 0; i < W; i++) {
-				writer.println(values + ED + resultToString(results[i], measurement));
-				sumResult += results[i];
-			}
-			// Write the average result value into file
-			ED = ";D";
-			writer.println(values + ED + resultToString(sumResult / W, measurement));
-			writer.println();
-
-			// Close file
-			writer.flush();
-			writer.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-			return false;
-		}
-		return true;
-	}
-
-	/**
-	 * Converts the numerical result into a string
-	 * 
-	 * @param result
-	 *                The benchmark result to convert
-	 * @param measurement
-	 *                The measurement method (time / key comparisons)
-	 * @return The result as a String
-	 */
-	private String resultToString(long result, MeasurementMethod measurement) {
-		String ret = "";
-		if (measurement == MeasurementMethod.TIME) {
-			double resultInSeconds = (double) result / 1000;
-			ret = ";  ;" + resultInSeconds + "sec";
-		}
-		if (measurement == MeasurementMethod.KEY_COMPARISONS) {
-			ret = ";" + result + "; ";
-		}
-		return ret;
+		System.out.println(FileTextCreator.saveToCsvFile(results, type, measurement, N, M, V, tag, W, comment, fileName) ? "done"
+				: "failed");
 	}
 
 	/**

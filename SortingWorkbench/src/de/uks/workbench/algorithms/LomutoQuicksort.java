@@ -64,7 +64,6 @@ public class LomutoQuicksort implements IAlgorithm {
 		int l, LastLow;
 
 		if (L < U) {
-			// TODO check if Math.random is a more suitable random generator
 			Util.switchValues(X, L, Util.randomGen().nextInt((U + 1) - L) + L);
 			T = X[L].getKey();
 			keycount++;
@@ -78,8 +77,8 @@ public class LomutoQuicksort implements IAlgorithm {
 				keycount++;
 			}
 			Util.switchValues(X, L, LastLow);
-			keycount = runSortWithCounter(X, L, LastLow - 1, keycount);
-			keycount = runSortWithCounter(X, LastLow + 1, U, keycount);
+			runSortWithCounter(X, L, LastLow - 1, keycount);
+			runSortWithCounter(X, LastLow + 1, U, keycount);
 		}
 		return keycount;
 	}
