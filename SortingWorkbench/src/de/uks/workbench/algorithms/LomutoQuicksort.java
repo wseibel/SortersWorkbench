@@ -30,7 +30,7 @@ public class LomutoQuicksort implements IAlgorithm {
 		int l, LastLow;
 
 		if (L < U) {
-			Util.switchValues(X, L, Util.randomGen().nextInt((U + 1) - L) + L);
+			Util.switchValues(X, L, Util.algorithmRandomGen().nextInt((U + 1) - L) + L);
 			T = X[L].getKey();
 			LastLow = L;
 
@@ -64,9 +64,8 @@ public class LomutoQuicksort implements IAlgorithm {
 		int l, LastLow;
 
 		if (L < U) {
-			Util.switchValues(X, L, Util.randomGen().nextInt((U + 1) - L) + L);
+			Util.switchValues(X, L, Util.algorithmRandomGen().nextInt((U + 1) - L) + L);
 			T = X[L].getKey();
-			keycount++;
 			LastLow = L;
 
 			for (l = L + 1; l <= U; l++) {

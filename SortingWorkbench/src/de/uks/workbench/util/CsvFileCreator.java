@@ -13,7 +13,7 @@ import de.uks.workbench.interfaces.MeasurementMethod;
  * A class for writing results in to a csv file
  * 
  */
-public class FileTextCreator {
+public class CsvFileCreator {
 
 	private static final String SEPARATOR = ";";
 	private static final String SINGLE_RESULT = "E";

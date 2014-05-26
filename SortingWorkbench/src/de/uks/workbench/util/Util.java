@@ -13,7 +13,11 @@ public class Util {
 
 	private static final int DEFAULT_SEED = 17;
 
+	// Two different random generators
+	// One for data creation...
 	private static Random randomGen = new Random(DEFAULT_SEED);
+	// ...and one for sort algorithms
+	private static Random algorithmRandomGen = new Random(DEFAULT_SEED);
 
 	/**
 	 * Swaps two elements in the given array
@@ -43,6 +47,30 @@ public class Util {
 		int tempKey = x.getKey();
 		x.setKey(y.getKey());
 		y.setKey(tempKey);
+	}
+
+	/**
+	 * @return The static random number generator for sort algorithms 
+	 */
+	public static Random algorithmRandomGen() {
+		return algorithmRandomGen;
+	}
+
+	/**
+	 * Re-initializes the random number generator for sort algorithms with the given seed parameter value
+	 * 
+	 * @param seed
+	 *                The seed value for the random number generator
+	 */
+	public static void resetAlgorithmRandomGen(int seed) {
+		algorithmRandomGen = new Random(seed);
+	}
+
+	/**
+	 * Re-initializes the random number generator for sort algorithms with the default seed value
+	 */
+	public static void resetAlgorithmRandomGen() {
+		resetRandomGen(DEFAULT_SEED);
 	}
 
 	/**

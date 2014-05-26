@@ -12,7 +12,7 @@ import de.uks.workbench.interfaces.PermutationType;
 
 public class WorkbenchStart {
 	// Settings
-	private static final AlgoType ALGO_TYPE = AlgoType.LOMUTO_QUICKSORT;
+	private static final AlgoType ALGO_TYPE = AlgoType.TURKU_QUICKSORT;
 	private static final MeasurementMethod MEASUREMENT_METHOD = MeasurementMethod.KEY_COMPARISONS;
 	private static final int ITERATIONS = 5;
 	private static final int N = 10000000;

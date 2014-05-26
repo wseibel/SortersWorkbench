@@ -16,7 +16,7 @@ import de.uks.workbench.interfaces.IAlgorithm;
 import de.uks.workbench.interfaces.MeasurementMethod;
 import de.uks.workbench.interfaces.Result;
 import de.uks.workbench.interfaces.PermutationType;
-import de.uks.workbench.util.FileTextCreator;
+import de.uks.workbench.util.CsvFileCreator;
 import de.uks.workbench.util.Util;
 
 /**
@@ -114,8 +114,9 @@ public class Workbench {
 	 */
 	public void runSort(AlgoType type, MeasurementMethod measurement, int N, int M, int V, String tag, int W, String comment,
 			String fileName) {
-		// Reset the seed for the random generator
+		// Reset the seed for the random generators
 		Util.resetRandomGen();
+		Util.resetAlgorithmRandomGen();
 		long[] results = new long[W];
 		// Repeat the benchmark W times with different values (since seed is not reseted)
 		for (int i = 0; i < W; i++) {
@@ -143,7 +144,7 @@ public class Workbench {
 		}
 		// Write the results to file
 		System.out.print("Writing result to file: ");
-		System.out.println(FileTextCreator.saveToCsvFile(results, type, measurement, N, M, V, tag, W, comment, fileName) ? "done"
+		System.out.println(CsvFileCreator.saveToCsvFile(results, type, measurement, N, M, V, tag, W, comment, fileName) ? "done"
 				: "failed");
 	}
 
