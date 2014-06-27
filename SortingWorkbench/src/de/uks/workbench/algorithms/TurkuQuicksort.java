@@ -8,16 +8,16 @@ import de.uks.workbench.util.Util;
  * 
  * Generic version of the TurkuQuicksort.
  * 
- * @param <T>
- *                the type of the values being sorted
  */
-public class TurkuQuicksort implements IAlgorithm {
+public class TurkuQuicksort<T extends ISortElement> implements IAlgorithm<T> {
 
 	private static final boolean IS_STABLE = false;
 
 	/**
 	 * The start method for the recursive TurkuQuicksort
 	 * 
+	 * @param T
+	 *                the type of the values being sorted 
 	 * @param a
 	 *                The array which will be sorted
 	 * @param l
@@ -26,7 +26,7 @@ public class TurkuQuicksort implements IAlgorithm {
 	 *                The right index of the sub array which is being sorted
 	 * @return The number of key comparisons the algorithm needed
 	 */
-	public <T extends ISortElement> void runSort(T[] a, int l, int r) {
+	public void runSort(T[] a, int l, int r) {
 		int H;
 		int rt, lt;
 
@@ -62,6 +62,8 @@ public class TurkuQuicksort implements IAlgorithm {
 	/**
 	 * The start method for the recursive TurkuQuicksort with a build-in counter for key comparisons
 	 * 
+	 * @param T
+	 *                the type of the values being sorted
 	 * @param a
 	 *                The array which will be sorted
 	 * @param l
@@ -72,7 +74,7 @@ public class TurkuQuicksort implements IAlgorithm {
 	 *                The initializing value for the key comparison counter
 	 * @return The number of key comparisons the algorithm needed
 	 */
-	public <T extends ISortElement> long runSortWithCounter(T[] a, int l, int r, long keycount) {
+	public long runSortWithCounter(T[] a, int l, int r, long keycount) {
 		int H;
 		int rt, lt;
 

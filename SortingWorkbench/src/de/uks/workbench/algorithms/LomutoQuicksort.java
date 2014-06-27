@@ -8,16 +8,16 @@ import de.uks.workbench.util.Util;
  * 
  * Generic version of the LomutoQuicksort.
  * 
- * @param T
- *                the type of the values being sorted
  */
-public class LomutoQuicksort implements IAlgorithm {
+public class LomutoQuicksort<T extends ISortElement> implements IAlgorithm<T> {
 
 	private static final boolean IS_STABLE = false;
 
 	/**
 	 * The start method for the recursive LomutoQuicksort
 	 * 
+	 * @param T
+	 *                the type of the values being sorted
 	 * @param X
 	 *                The array which will be sorted
 	 * @param L
@@ -25,7 +25,7 @@ public class LomutoQuicksort implements IAlgorithm {
 	 * @param U
 	 *                The right index of the sub array which is being sorted
 	 */
-	public <T extends ISortElement> void runSort(T[] X, int L, int U) {
+	public void runSort(T[] X, int L, int U) {
 		int T;
 		int l, LastLow;
 
@@ -49,6 +49,8 @@ public class LomutoQuicksort implements IAlgorithm {
 	/**
 	 * The start method for the recursive LomutoQuicksort with a build-in counter for key comparisons
 	 * 
+	 * @param T
+	 *                the type of the values being sorted
 	 * @param X
 	 *                The array which will be sorted
 	 * @param L
@@ -59,7 +61,7 @@ public class LomutoQuicksort implements IAlgorithm {
 	 *                The initializing value for the key comparison counter
 	 * @return The number of key comparisons the algorithm needed
 	 */
-	public <T extends ISortElement> long runSortWithCounter(T[] X, int L, int U, long keycount) {
+	public long runSortWithCounter(T[] X, int L, int U, long keycount) {
 		int T;
 		int l, LastLow;
 

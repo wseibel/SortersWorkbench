@@ -16,7 +16,7 @@ public class Util {
 	// Two different random generators
 	// One for data creation...
 	private static Random randomGen = new Random(DEFAULT_SEED);
-	// ...and one for sort algorithms
+	// ...and one for sorting algorithms
 	private static Random algorithmRandomGen = new Random(DEFAULT_SEED);
 
 	/**
@@ -50,14 +50,14 @@ public class Util {
 	}
 
 	/**
-	 * @return The static random number generator for sort algorithms 
+	 * @return The static random number generator for sorting algorithms 
 	 */
 	public static Random algorithmRandomGen() {
 		return algorithmRandomGen;
 	}
 
 	/**
-	 * Re-initializes the random number generator for sort algorithms with the given seed parameter value
+	 * Re-initializes the random number generator for sorting algorithms with the given seed parameter value
 	 * 
 	 * @param seed
 	 *                The seed value for the random number generator
@@ -67,7 +67,7 @@ public class Util {
 	}
 
 	/**
-	 * Re-initializes the random number generator for sort algorithms with the default seed value
+	 * Re-initializes the random number generator for sorting algorithms with the default seed value
 	 */
 	public static void resetAlgorithmRandomGen() {
 		resetRandomGen(DEFAULT_SEED);

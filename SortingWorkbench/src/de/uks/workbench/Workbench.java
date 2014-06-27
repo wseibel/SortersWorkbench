@@ -3,7 +3,9 @@ package de.uks.workbench;
 import java.util.Arrays;
 import java.util.HashMap;
 
+import de.uks.workbench.algorithms.LinkSort;
 import de.uks.workbench.algorithms.LomutoQuicksort;
+import de.uks.workbench.algorithms.TriSort;
 import de.uks.workbench.algorithms.TurkuQuicksort;
 import de.uks.workbench.elements.DefaultElement;
 import de.uks.workbench.handlers.DefaultTagHandler;
@@ -13,22 +15,28 @@ import de.uks.workbench.handlers.SawtoothTagHandler;
 import de.uks.workbench.handlers.TagHandler;
 import de.uks.workbench.interfaces.AlgoType;
 import de.uks.workbench.interfaces.IAlgorithm;
+import de.uks.workbench.interfaces.IListAlgorithm;
+import de.uks.workbench.interfaces.ISortElement;
 import de.uks.workbench.interfaces.MeasurementMethod;
 import de.uks.workbench.interfaces.Result;
 import de.uks.workbench.interfaces.PermutationType;
+import de.uks.workbench.list.ListNode;
+import de.uks.workbench.list.ElementList;
 import de.uks.workbench.util.CsvFileCreator;
 import de.uks.workbench.util.Util;
 
 /**
  * 
- * This class is supposed to prepare an array for benchmarking different sort algorithms. It also checks the result after the sort
+ * This class is supposed to prepare an array for benchmarking different sorting algorithms. It also checks the result after the sort
  * 
  */
 public class Workbench {
 	// HashMap for different handlers which handle the different permutation options
 	HashMap<String, TagHandler> tagHandlers = new HashMap<String, TagHandler>();
 	// HashMap for the different algorithms
-	HashMap<AlgoType, IAlgorithm> algorithms = new HashMap<AlgoType, IAlgorithm>();
+	HashMap<AlgoType, IAlgorithm<ISortElement>> algorithms = new HashMap<AlgoType, IAlgorithm<ISortElement>>();
+	// HashMap for the different list based algorithms
+	HashMap<AlgoType, IListAlgorithm<DefaultElement>> listAlgorithms = new HashMap<AlgoType, IListAlgorithm<DefaultElement>>();
 
 	public Workbench() {
 		// Initialize the handler HashMap
@@ -37,8 +45,11 @@ public class Workbench {
 		tagHandlers.put(PermutationType.SAWTOOTH.toString(), new SawtoothTagHandler());
 		tagHandlers.put(PermutationType.NINETY_TEN_SEQUENCE.toString(), new NinetyTenTagHandler());
 		// Initialize the algorithm HashMap
-		algorithms.put(AlgoType.LOMUTO_QUICKSORT, new LomutoQuicksort());
-		algorithms.put(AlgoType.TURKU_QUICKSORT, new TurkuQuicksort());
+		algorithms.put(AlgoType.LOMUTO_QUICKSORT, new LomutoQuicksort<ISortElement>());
+		algorithms.put(AlgoType.TURKU_QUICKSORT, new TurkuQuicksort<ISortElement>());
+		// Initialize the list based algorithm HashMap
+		listAlgorithms.put(AlgoType.TRISORT, new TriSort<DefaultElement>());
+		listAlgorithms.put(AlgoType.LINKSORT, new LinkSort<DefaultElement>());
 	}
 
 	/**
@@ -128,24 +139,64 @@ public class Workbench {
 			DataPerm(array, V, tag);
 			System.out.println("Data permutation (" + tag + "): " + (array != null ? "done" : "failed"));
 			// Sort Data
-			int left = 1, right = N;
-			if (measurement == MeasurementMethod.TIME) {
-				IAlgorithm algorithm = algorithms.get(type);
-				long startTime = System.currentTimeMillis();
-				algorithm.runSort(array, left, right);
-				results[i] = System.currentTimeMillis() - startTime;
+			if (type == AlgoType.TRISORT || type == AlgoType.LINKSORT) {
+				sortList(type, measurement, results, i, array);
+			} else {
+				sortArray(type, measurement, N, results, i, array);
 			}
-			if (measurement == MeasurementMethod.KEY_COMPARISONS) {
-				results[i] = algorithms.get(type).runSortWithCounter(array, left, right, 0);
-			}
-			// Check if the elements are in the correct order
-			Result checkResult = checkSort(array, algorithms.get(type).getIsStable());
-			System.out.println("Sort result: " + checkResult.toString() + "\n");
 		}
 		// Write the results to file
 		System.out.print("Writing result to file: ");
 		System.out.println(CsvFileCreator.saveToCsvFile(results, type, measurement, N, M, V, tag, W, comment, fileName) ? "done"
 				: "failed");
+	}
+
+	private void sortArray(AlgoType type, MeasurementMethod measurement, int N, long[] results, int i, DefaultElement[] array) {
+		int left = 1, right = N;
+		if (measurement == MeasurementMethod.TIME) {
+			IAlgorithm<ISortElement> algorithm = algorithms.get(type);
+			long startTime = System.currentTimeMillis();
+			algorithm.runSort(array, left, right);
+			results[i] = System.currentTimeMillis() - startTime;
+		}
+		if (measurement == MeasurementMethod.KEY_COMPARISONS) {
+			results[i] = algorithms.get(type).runSortWithCounter(array, left, right, 0);
+		}
+		// Check if the elements are in the correct order
+		Result checkResult = checkSort(array, algorithms.get(type).getIsStable());
+		System.out.println("Sort result: " + checkResult.toString() + "\n");
+	}
+
+	private void sortList(AlgoType type, MeasurementMethod measurement, long[] results, int i, DefaultElement[] array) {
+		ElementList<DefaultElement> list = new ElementList<DefaultElement>();
+		copyArray2List(array, list);
+		if (measurement == MeasurementMethod.TIME) {
+			IListAlgorithm<DefaultElement> algorithm = listAlgorithms.get(type);
+			long startTime = System.currentTimeMillis();
+			algorithm.runSort(list);
+			results[i] = System.currentTimeMillis() - startTime;
+		}
+		if (measurement == MeasurementMethod.KEY_COMPARISONS) {
+			results[i] = listAlgorithms.get(type).runSortWithCounter(list, 0);
+		}
+		copyList2Array(list, array);
+		// Check if the elements are in the correct order
+		Result checkResult = checkSort(array, listAlgorithms.get(type).getIsStable());
+		System.out.println("Sort result: " + checkResult.toString() + "\n");
+	}
+
+	private void copyList2Array(ElementList<DefaultElement> list, DefaultElement[] array) {
+		int i = 1;
+		for (ListNode<DefaultElement> iter = list.first(); i < array.length && iter != null; i++, iter = iter.next) {
+			array[i] = iter.element;
+		}
+	}
+
+	private void copyArray2List(DefaultElement[] array, ElementList<DefaultElement> list) {
+		for (int i = 1; i < array.length; i++) {
+			ListNode<DefaultElement> newNode = new ListNode<DefaultElement>(array[i]);
+			list.appendNode(newNode);
+		}
 	}
 
 	/**
