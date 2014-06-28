@@ -4,6 +4,8 @@ package de.uks.workbench.interfaces;
  * 
  * An interface for all sorting algorithms based on arrays
  * 
+ * @param T
+ *                the type of the values being sorted in the algorithm
  */
 public interface IAlgorithm <T extends ISortElement> {
 	/**

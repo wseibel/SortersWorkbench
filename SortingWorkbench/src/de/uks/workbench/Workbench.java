@@ -3,6 +3,8 @@ package de.uks.workbench;
 import java.util.Arrays;
 import java.util.HashMap;
 
+import de.uks.workbench.algorithms.FHeapsort;
+import de.uks.workbench.algorithms.Heapsort;
 import de.uks.workbench.algorithms.LinkSort;
 import de.uks.workbench.algorithms.LomutoQuicksort;
 import de.uks.workbench.algorithms.TriSort;
@@ -47,6 +49,8 @@ public class Workbench {
 		// Initialize the algorithm HashMap
 		algorithms.put(AlgoType.LOMUTO_QUICKSORT, new LomutoQuicksort<ISortElement>());
 		algorithms.put(AlgoType.TURKU_QUICKSORT, new TurkuQuicksort<ISortElement>());
+		algorithms.put(AlgoType.HEAPSORT, new Heapsort<ISortElement>());
+		algorithms.put(AlgoType.F_HEAPSORT, new FHeapsort<ISortElement>());
 		// Initialize the list based algorithm HashMap
 		listAlgorithms.put(AlgoType.TRISORT, new TriSort<DefaultElement>());
 		listAlgorithms.put(AlgoType.LINKSORT, new LinkSort<DefaultElement>());

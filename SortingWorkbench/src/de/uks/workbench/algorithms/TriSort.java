@@ -10,7 +10,7 @@ import de.uks.workbench.list.ListNode;
  * Generic version of the TriSort. A Quicksort algorithm for linked lists.
  * 
  * @param E
- *                the type of the elements being sorted
+ *                the elements being sorted
  */
 public class TriSort<E extends ISortElement> implements IListAlgorithm<E> {
 

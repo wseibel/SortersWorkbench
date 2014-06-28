@@ -6,6 +6,8 @@ import de.uks.workbench.list.ElementList;
  * 
  * An interface for all sorting algorithms based on lists
  * 
+ * @param E
+ *                the elements being sorted in the algorithm
  */
 public interface IListAlgorithm<E extends ISortElement> {
 	/**

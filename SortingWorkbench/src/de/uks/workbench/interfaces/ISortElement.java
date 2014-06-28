@@ -2,7 +2,7 @@ package de.uks.workbench.interfaces;
 
 /**
  * 
- * This interface has to be implemented for every kind of elements
+ * This interface has to be implemented for every kind of elements. The elements are used for lists and arrays.
  * 
  * @see de.uks.workbench.elements ElementTypes
  * 
