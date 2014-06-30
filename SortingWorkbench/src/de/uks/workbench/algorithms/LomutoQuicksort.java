@@ -21,9 +21,9 @@ public class LomutoQuicksort<T extends ISortElement> implements IAlgorithm<T> {
 	 * @param X
 	 *                The array which will be sorted
 	 * @param L
-	 *                The left index of the sub array which is being sorted
+	 *                The left index of the (sub) array which is being sorted
 	 * @param U
-	 *                The right index of the sub array which is being sorted
+	 *                The right index of the (sub) array which is being sorted
 	 */
 	public void runSort(T[] X, int L, int U) {
 		int T;
@@ -52,9 +52,9 @@ public class LomutoQuicksort<T extends ISortElement> implements IAlgorithm<T> {
 	 * @param X
 	 *                The array which will be sorted
 	 * @param L
-	 *                The left index of the sub array which is being sorted
+	 *                The left index of the (sub) array which is being sorted
 	 * @param U
-	 *                The right index of the sub array which is being sorted
+	 *                The right index of the (sub) array which is being sorted
 	 * @param keycount
 	 *                The initializing value for the key comparison counter
 	 * @return The number of key comparisons the algorithm needed

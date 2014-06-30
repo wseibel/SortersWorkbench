@@ -11,11 +11,11 @@ import de.uks.workbench.interfaces.PermutationType;
  */
 public class WorkbenchStart {
 	// Settings
-	private static final AlgoType ALGO_TYPE = AlgoType.F_HEAPSORT;
-	private static final MeasurementMethod MEASUREMENT_METHOD = MeasurementMethod.KEY_COMPARISONS;
+	private static final AlgoType ALGO_TYPE = AlgoType.MED_3_QUICKSORT;
+	private static final MeasurementMethod MEASUREMENT_METHOD = MeasurementMethod.TIME;
 	private static final int ITERATIONS = 5;
 	private static final int N = 10000000;
-	private static final int M = 10000;
+	private static final int M = 1;
 	private static final int V = 0;
 	private static final String TAG = PermutationType.DEFAULT.toString();
 

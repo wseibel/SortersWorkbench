@@ -73,6 +73,34 @@ public class CsvFileCreator {
 		return true;
 	}
 
+	public static boolean saveToCsvFileWithC(long[] results, AlgoType type, MeasurementMethod measurement, int N, int M, int V,
+			String tag, int W, String comment, String fileName, int C) {
+		try {
+			PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(fileName, true)));
+			// Write the header
+			writer.println( "AlgoType;N;M;V;PermutationType;W;Comment;C;ED;Time;KeyComparisons");
+			String values = type.toString() + SEPARATOR + N + SEPARATOR + M + SEPARATOR + V + SEPARATOR + tag + SEPARATOR + W
+					+ SEPARATOR + comment + SEPARATOR + C;
+			long sumResult = 0;
+			// Write a new line for every result
+			for (int i = 0; i < W; i++) {
+				writer.println(values + SEPARATOR + SINGLE_RESULT + resultToString(results[i], measurement));
+				sumResult += results[i];
+			}
+			// Write the average result value into file
+			writer.println(values + SEPARATOR + AVERAGE_FIGURE + resultToString(sumResult / W, measurement));
+			writer.println();
+
+			// Close file
+			writer.flush();
+			writer.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+
 	/**
 	 * Converts the numerical result into a string
 	 * 

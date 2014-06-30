@@ -21,10 +21,9 @@ public class TurkuQuicksort<T extends ISortElement> implements IAlgorithm<T> {
 	 * @param a
 	 *                The array which will be sorted
 	 * @param l
-	 *                The left index of the sub array which is being sorted
+	 *                The left index of the (sub) array which is being sorted
 	 * @param r
-	 *                The right index of the sub array which is being sorted
-	 * @return The number of key comparisons the algorithm needed
+	 *                The right index of the (sub) array which is being sorted
 	 */
 	public void runSort(T[] a, int l, int r) {
 		int H;
@@ -65,9 +64,9 @@ public class TurkuQuicksort<T extends ISortElement> implements IAlgorithm<T> {
 	 * @param a
 	 *                The array which will be sorted
 	 * @param l
-	 *                The left index of the sub array which is being sorted
+	 *                The left index of the (sub) array which is being sorted
 	 * @param r
-	 *                The right index of the sub array which is being sorted
+	 *                The right index of the (sub) array which is being sorted
 	 * @param keycount
 	 *                The initializing value for the key comparison counter
 	 * @return The number of key comparisons the algorithm needed

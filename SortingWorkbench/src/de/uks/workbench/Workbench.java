@@ -7,6 +7,7 @@ import de.uks.workbench.algorithms.FHeapsort;
 import de.uks.workbench.algorithms.Heapsort;
 import de.uks.workbench.algorithms.LinkSort;
 import de.uks.workbench.algorithms.LomutoQuicksort;
+import de.uks.workbench.algorithms.Med3Quicksort;
 import de.uks.workbench.algorithms.TriSort;
 import de.uks.workbench.algorithms.TurkuQuicksort;
 import de.uks.workbench.elements.DefaultElement;
@@ -51,6 +52,7 @@ public class Workbench {
 		algorithms.put(AlgoType.TURKU_QUICKSORT, new TurkuQuicksort<ISortElement>());
 		algorithms.put(AlgoType.HEAPSORT, new Heapsort<ISortElement>());
 		algorithms.put(AlgoType.F_HEAPSORT, new FHeapsort<ISortElement>());
+		algorithms.put(AlgoType.MED_3_QUICKSORT, new Med3Quicksort<ISortElement>());
 		// Initialize the list based algorithm HashMap
 		listAlgorithms.put(AlgoType.TRISORT, new TriSort<DefaultElement>());
 		listAlgorithms.put(AlgoType.LINKSORT, new LinkSort<DefaultElement>());
@@ -60,7 +62,7 @@ public class Workbench {
 	 * Creates an array of values with keys according to the N and M parameter
 	 * 
 	 * @param N
-	 *                The number of values to create. The array will have the size of N+1 because the first element is reserved for a
+	 *                The number of values to create. The array will have the size of N+1, since the first element is reserved for a
 	 *                stopper value
 	 * @param M
 	 *                Determines the repetitions of a certain key
@@ -86,6 +88,23 @@ public class Workbench {
 			array[i].setInfo(i);
 		}
 		return array;
+	}
+
+	/**
+	 * Copies the given array and appends a stopper at the end.
+	 * 
+	 * @param array
+	 *                The array which the stopper will append to
+	 * @return The given array with an appended stopper
+	 */
+	public DefaultElement[] appendStopper(DefaultElement[] array) {
+		DefaultElement[] arrayWithStopper = new DefaultElement[array.length + 1];
+		for (int i = 0; i < array.length; i++) {
+			arrayWithStopper[i] = array[i];
+		}
+		// Set the stopper at the end with max value as key
+		arrayWithStopper[array.length] = new DefaultElement(Integer.MAX_VALUE);
+		return arrayWithStopper;
 	}
 
 	/**
@@ -133,6 +152,30 @@ public class Workbench {
 		Util.resetRandomGen();
 		Util.resetAlgorithmRandomGen();
 		long[] results = new long[W];
+		if (type == AlgoType.MED_3_QUICKSORT) {
+			for (int j = 2; j <= 100; j++) {
+				for (int i = 0; i < W; i++) {
+					System.out.println("Iteration: " + (i + 1));
+					// Generate keys and info
+					DefaultElement[] array = DataGen(N, M);
+					System.out.println("Data generation: " + (array != null ? "done" : "failed"));
+					// Permute the keys
+					DataPerm(array, V, tag);
+					System.out.println("Data permutation (" + tag + "): " + (array != null ? "done" : "failed"));
+					// Append a stopper value to the end
+					array = appendStopper(array);
+					System.out.println("Appending stopper: " + (array.length == N + 2 ? "done" : "failed"));
+					Med3Quicksort<ISortElement> algorithm = (Med3Quicksort<ISortElement>)algorithms.get(type);
+					algorithm.c = j;
+					sortArray(type, measurement, N + 1, results, i, array);
+				}
+				// Write the results to file
+				System.out.print("Writing result to file: ");
+				System.out.println(CsvFileCreator.saveToCsvFileWithC(results, type, measurement, N, M, V, tag, W, comment, fileName, j) ? "done"
+						: "failed");
+			}
+			return;
+		}
 		// Repeat the benchmark W times with different values (since seed is not reseted)
 		for (int i = 0; i < W; i++) {
 			System.out.println("Iteration: " + (i + 1));
